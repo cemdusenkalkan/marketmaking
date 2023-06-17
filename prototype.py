@@ -1,11 +1,5 @@
-from binance.client import Client
 import talib
 import numpy as np
-
-
-api_key = 'YOUR_API_KEY'
-api_secret = 'YOUR_API_SECRET'
-client = Client(api_key, api_secret)
 
 
 def calculate_GMMA(close_prices, short_periods, long_periods):
@@ -19,33 +13,22 @@ def calculate_ATR(high_prices, low_prices, close_prices, atr_period):
     return atr
 
 
-symbol = 'ETHUSDT'
-interval = Client.KLINE_INTERVAL_1DAY
-start_str = '1 year ago UTC'
-klines = client.get_historical_klines(symbol, interval, start_str)
-
-
-high_prices = np.array([float(k[2]) for k in klines])
-low_prices = np.array([float(k[3]) for k in klines])
-close_prices = np.array([float(k[4]) for k in klines])
-
+# Custom price data for backtesting
+close_prices = np.array([100, 102, 105, 101, 98, 105, 110, 108, 112, 115, 110, 105])
+high_prices = np.array([105, 108, 110, 105, 102, 110, 115, 112, 116, 118, 112, 108])
+low_prices = np.array([95, 98, 100, 96, 94, 100, 105, 102, 106, 110, 105, 100])
 
 short_periods = [2, 7, 11, 13, 21, 14]
 long_periods = [29, 31, 37, 47, 53, 61]
 
-
 short_emas, long_emas = calculate_GMMA(close_prices, short_periods, long_periods)
 
-
 atr = calculate_ATR(high_prices, low_prices, close_prices, atr_period=14)
-
 
 position = None
 stop_loss = None
 
-
 for i in range(len(close_prices)):
-   
     if i < max(long_periods):
         continue
 
