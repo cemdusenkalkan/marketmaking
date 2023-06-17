@@ -1,0 +1,9 @@
+import pandas as pd
+
+# price datafrom csv
+df = pd.read_csv('datasfromexchange.csv')
+
+# Extract the necessary columns
+close_prices = df['Close'].values
+high_prices = df['High'].values
+low_prices = df['Low'].values
