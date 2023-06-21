@@ -175,7 +175,7 @@ def backtest_strategy(csv_file, short_periods, long_periods, atr_period):
     # Save the chart as an HTML file
     fig.write_html('trades_chart.html')
 
-    # ...
+    
 
 
 csv_file = '/Users/cem/Desktop/btcltf20212022.csv'
