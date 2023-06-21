@@ -1,0 +1,31 @@
+def is_within_trading_hours(timestamp):
+
+    utc_time = datetime.utcfromtimestamp(timestamp / 1000)
+
+    trading_start = time(14, 0)  # 2 PM UTC
+
+    trading_end = time(22, 0)  # 10 PM UTC
+
+    trading_time = datetime.combine(utc_time.date(), trading_start)
+
+    trading_start_timestamp = int(trading_time.timestamp() * 1000)
+
+    trading_time = datetime.combine(utc_time.date(), trading_end)
+
+    trading_end_timestamp = int(trading_time.timestamp() * 1000)
+
+    return trading_start_timestamp <= timestamp <= trading_end_timestamp
+
+
+
+def backtest_strategy(csv_file, short_periods, long_periods, atr_period):
+
+ .
+
+.
+
+.
+
+.
+
+    timestamps = df['Timestamp'].values
