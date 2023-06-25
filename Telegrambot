@@ -1,0 +1,60 @@
+import os
+from binance.client import Client
+from binance.enums import *
+import pandas as pd
+import pytz
+from datetime import datetime
+from python_telegram_bot import Bot
+
+# binance api
+API_KEY = 'x'
+API_SECRET = 'y'
+client = Client(API_KEY, API_SECRET)
+
+#telegram bot
+bot = Bot(token='your_telegram_bot_token')
+chat_id = 'your_chat_id'
+
+# GMMA and ATR calculation functions
+def calculate_GMMA(data, periods):
+    # gmma functiob
+    pass
+
+def calculate_ATR(data, period):
+    # atr function
+    pass
+
+# trading function
+def trading_bot():
+    # Get latest candlestick data from Binance
+    klines = client.get_klines(symbol="BTCUSDT", interval=Client.KLINE_INTERVAL_5MINUTE)
+    data = pd.DataFrame(klines, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'])
+    data['timestamp'] = pd.to_datetime(data['timestamp'], unit='ms')
+
+    # Calculate the GMMA and ATR
+    short_GMMA = calculate_GMMA(data, short_periods)
+    long_GMMA = calculate_GMMA(data, long_periods)
+    atr = calculate_ATR(data, atr_period)
+
+    
+    if short_GMMA > long_GMMA and now.hour >= 7 and now.hour <= 22:
+        # Open long position
+        message = "Opening long position"
+        stop_loss = atr*3
+        take_profit = atr*11
+    elif short_GMMA < long_GMMA and now.hour >= 7 and now.hour <= 22:
+        # Open short position
+        message = "Opening short position"
+        stop_loss = atr*3
+        take_profit = atr*11
+    else:
+        # Do nothing
+        return
+
+    # Send notification via Telegram
+    bot.send_message(chat_id=chat_id, text=message)
+
+
+while True:
+    now = datetime.now(pytz.timezone('UTC'))
+    trading_bot()
